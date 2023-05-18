@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_parcel_locker_list" model="ir.ui.view">
+            <field name="name">Parcel Lockers</field>
+            <field name="model">parcel.locker</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Parcel Lockers">
+                    <field name="code"/>
+                    <field name="city"/>
+                    <field name="street"/>
+                    <field name="building"/>
+                    <field name="zip"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="parcel_locker_view_search" model="ir.ui.view">
+            <field name="name">parcel.locker.view.search</field>
+            <field name="model">parcel.locker</field>
+            <field name="arch" type="xml">
+                <search string="Search Parcel Locker">
+                    <field name="code"/>
+                    <field name="city"/>
+                    <field name="street"/>
+                    <field name="building"/>
+                    <field name="zip"/>
+                    <field name="description"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

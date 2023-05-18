@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_order_inpost_form" model="ir.ui.view">
+            <field name="name">sale.order.inpost.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_invoice_id" position="after">
+                    <field name="delivery_inpost" groups="account.group_delivery_invoice_address" context="{'default_type':'delivery'}" options='{"always_reload": True}'/>
+                    <field name="parcel_locker_id" groups="account.group_delivery_invoice_address" context="{'default_type':'delivery'}" options='{"always_reload": True}' attrs="{'invisible': [('delivery_inpost', '=', False)]}" string="Delivery Address"/>
+                </field>
+                <field name="partner_shipping_id" position="replace">
+                    <field name="partner_shipping_id" groups="account.group_delivery_invoice_address" context="{'default_type':'delivery'}" options='{"always_reload": True}' attrs="{'invisible': [('delivery_inpost', '=', True)]}"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

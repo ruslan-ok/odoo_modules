@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+sale_parcel.access_parcel_locker,access_parcel_locker,sale_parcel.model_parcel_locker,base.group_user,1,1,1,1
