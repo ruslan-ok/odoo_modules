@@ -15,6 +15,7 @@ This module allows delivery to a parcel machine.
 """,
     'depends': ['base', 'sale'],
     'data': [
+        'security/sale_parcel_security.xml',
         'security/ir.model.access.csv',
         'data/parcel.locker.csv',
         'views/parcel_locker_views.xml',

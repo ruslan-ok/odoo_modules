@@ -1,2 +1,4 @@
 .vscode
-*.pyc
+# compiled python files
+*.py[co]
+__pycache__/
