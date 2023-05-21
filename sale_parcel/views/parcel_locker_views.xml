@@ -29,6 +29,8 @@
                     <field name="building"/>
                     <field name="zip"/>
                     <field name="description"/>
+                    <separator/>
+                    <filter name="zip" string="By index (zip)" domain="[('zip', '=', '51-126')]" />
                 </search>
             </field>
         </record>
