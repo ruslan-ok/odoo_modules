@@ -22,7 +22,7 @@
             <field name="name">parcel.locker.view.search</field>
             <field name="model">parcel.locker</field>
             <field name="arch" type="xml">
-                <search string="Search Parcel Locker">
+                <search string="Search Parcel Machine">
                     <field name="code"/>
                     <field name="city"/>
                     <field name="street"/>
@@ -31,6 +31,49 @@
                     <field name="description"/>
                 </search>
             </field>
+        </record>
+
+        <record id="view_parcel_locker_report" model="ir.ui.view">
+            <field name="name">parcel.locker.report</field>
+            <field name="model">parcel.locker</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Parcel Lockers Report">
+                    <field name="code"/>
+                    <field name="city"/>
+                    <field name="street"/>
+                    <field name="building"/>
+                    <field name="zip"/>
+                    <field name="description"/>
+                    <field name="count"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_parcel_locker_report_search" model="ir.ui.view">
+            <field name="name">parcel.locker.report.search</field>
+            <field name="model">parcel.locker</field>
+            <field name="arch" type="xml">
+                <search string="Search Parcel Machine">
+                    <field name="code"/>
+                    <field name="city"/>
+                    <field name="street"/>
+                    <field name="building"/>
+                    <field name="zip"/>
+                    <field name="description"/>
+                    <filter string="With orders" name="filter_with_orders" domain="[('count', '>', '0')]" help="Parcel Machines with Sale Orders"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_parcel_machine_report" model="ir.actions.act_window">
+            <field name="name">Orders by Parcel Machine</field>
+            <field name="res_model">parcel.locker</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_parcel_locker_report"/>
+            <field name="search_view_id" ref="view_parcel_locker_report_search"/>
+            <field name="context">{'search_default_filter_with_orders': 1}</field>
+            <field name="help">Number of orders delivered to various parcel machines.</field>
         </record>
 
     </data>
