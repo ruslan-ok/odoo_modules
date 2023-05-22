@@ -20,6 +20,7 @@ This module allows delivery to a parcel machine.
         'data/parcel.locker.csv',
         'views/parcel_locker_views.xml',
         'views/sale_order_views.xml',
+        'views/sale_menus.xml',
     ],
     'installable': True,
     'application': True,

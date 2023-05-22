@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 
 class ParcelLocker(models.Model):
     """ Model for a parcel locker.
@@ -25,4 +25,12 @@ class ParcelLocker(models.Model):
     building = fields.Char('Building number')
     latitude = fields.Char('Latitude', required=True)
     longitude = fields.Char('Longitude', required=True)
-    
+    sale_order_ids = fields.One2many(comodel_name='sale.order', inverse_name='parcel_locker_id', string='Orders for this Parcel Machine')
+    count = fields.Integer(string="Order Count", compute='_compute_count', store=True)
+
+    #=== COMPUTE METHODS ===#
+
+    @api.depends('sale_order_ids')
+    def _compute_count(self):
+        for wizard in self:
+            wizard.count = len(wizard.sale_order_ids)
