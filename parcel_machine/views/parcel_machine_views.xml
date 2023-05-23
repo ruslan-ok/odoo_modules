@@ -2,12 +2,12 @@
 <odoo>
     <data>
 
-        <record id="view_parcel_locker_list" model="ir.ui.view">
-            <field name="name">Parcel Lockers</field>
-            <field name="model">parcel.locker</field>
+        <record id="parcel_machine_view_list" model="ir.ui.view">
+            <field name="name">parcel.machine.view.list</field>
+            <field name="model">parcel.machine</field>
             <field eval="1" name="priority"/>
             <field name="arch" type="xml">
-                <tree string="Parcel Lockers">
+                <tree string="Parcel Machines">
                     <field name="code"/>
                     <field name="city"/>
                     <field name="street"/>
@@ -18,9 +18,9 @@
             </field>
         </record>
 
-        <record id="parcel_locker_view_search" model="ir.ui.view">
-            <field name="name">parcel.locker.view.search</field>
-            <field name="model">parcel.locker</field>
+        <record id="parcel_machine_view_search" model="ir.ui.view">
+            <field name="name">parcel.machine.view.search</field>
+            <field name="model">parcel.machine</field>
             <field name="arch" type="xml">
                 <search string="Search Parcel Machine">
                     <field name="code"/>
@@ -37,12 +37,12 @@
             </field>
         </record>
 
-        <record id="view_parcel_locker_report" model="ir.ui.view">
-            <field name="name">parcel.locker.report</field>
-            <field name="model">parcel.locker</field>
+        <record id="parcel_machine_view_report" model="ir.ui.view">
+            <field name="name">parcel.machine.view.report</field>
+            <field name="model">parcel.machine</field>
             <field eval="1" name="priority"/>
             <field name="arch" type="xml">
-                <tree string="Parcel Lockers Report">
+                <tree string="Parcel machines Report">
                     <field name="code"/>
                     <field name="city"/>
                     <field name="street"/>
@@ -54,12 +54,12 @@
             </field>
         </record>
 
-        <record id="action_parcel_machine_report" model="ir.actions.act_window">
+        <record id="parcel_machine_action_report" model="ir.actions.act_window">
             <field name="name">Orders by Parcel Machine</field>
-            <field name="res_model">parcel.locker</field>
+            <field name="res_model">parcel.machine</field>
             <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_parcel_locker_report"/>
-            <field name="search_view_id" ref="parcel_locker_view_search"/>
+            <field name="view_id" ref="parcel_machine_view_report"/>
+            <field name="search_view_id" ref="parcel_machine_view_search"/>
             <field name="context">{'search_default_filter_with_orders': 1, 'hide_filter_by_zip': 1}</field>
             <field name="help">Number of orders delivered to various parcel machines.</field>
         </record>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="ir_cron_auto_update_parcel_machine_list" model="ir.cron">
+    <record id="parcel_machine_cron" model="ir.cron">
         <field name="name">Updating the list of Parcel Machines</field>
         <field name="interval_number">1</field>
         <field name="interval_type">weeks</field>
         <field name="numbercall">-1</field>
         <field name="doall" eval="False"/>
-        <field name="model_id" ref="model_parcel_locker"/>
-        <field name="code">model._cron_update_from_csv('/home/ruslan/src/odoo_modules/sale_parcel/data/points.json')</field>
+        <field name="model_id" ref="model_parcel_machine"/>
+        <field name="code">model._cron_update_from_csv('/home/ruslan/src/odoo_modules/parcel_machine/data/parcel_machine_data.json')</field>
         <field name="nextcall" eval="(DateTime.now().replace(hour=3, minute=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')" />
         <field name="active" eval="True"/>
         <field name="state">code</field>

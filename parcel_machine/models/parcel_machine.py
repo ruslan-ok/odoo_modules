@@ -6,14 +6,14 @@ import pandas as pd
 import json
 
 
-class ParcelLocker(models.Model):
-    """ Model for a parcel locker.
-        Parcel locker is an automated postal box that allows users
+class ParcelMachine(models.Model):
+    """ Model for a Parcel Machine.
+        Parcel Machine is an automated postal box that allows users
         for a self-service collection of parcels and oversize letters
         as well as the dispatch of parcels.
     """
-    _name = 'parcel.locker'
-    _description = 'Parcel Lockers'
+    _name = 'parcel.machine'
+    _description = 'Parcel Machine'
     _rec_name = 'code'
     _order = 'code'
     _rec_names_search = ['code', 'city', 'street', 'building', 'zip', 'description']
@@ -28,7 +28,7 @@ class ParcelLocker(models.Model):
     building = fields.Char('Building number')
     latitude = fields.Char('Latitude', required=True)
     longitude = fields.Char('Longitude', required=True)
-    sale_order_ids = fields.One2many(comodel_name='sale.order', inverse_name='parcel_locker_id', string='Orders for this Parcel Machine')
+    sale_order_ids = fields.One2many(comodel_name='sale.order', inverse_name='parcel_machine_id', string='Orders for this Parcel Machine')
     count = fields.Integer(string="Order Count", compute='_compute_count', store=True)
 
     #=== COMPUTE METHODS ===#
@@ -44,12 +44,12 @@ class ParcelLocker(models.Model):
         df = pd.json_normalize(data, 'items')
         df_torun = df[df['g'] == 'torun'][['n', 'd', 'c', 'g', 'e', 'r', 'o', 'b', 'l.a', 'l.o']]
         last_id = 0
-        self._cr.execute('SELECT max(parcel_locker.id) FROM parcel_locker')
+        self._cr.execute('SELECT max(parcel_machine.id) FROM parcel_machine')
         res = self._cr.fetchone()
         if res:
             last_id = res[0]
         for index, row in df_torun.iterrows():
-            pm = self.env['parcel.locker'].search(domain=[('code', '=', row['n'])], limit=1)
+            pm = self.env['parcel.machine'].search(domain=[('code', '=', row['n'])], limit=1)
             if pm:
                 if (pm['description'] != row['d']) or (pm['city'] != row['c']) or (pm['city_eng'] != row['g']) or (pm['street'] != row['e']) or (pm['area'] != row['r']) or \
                     (pm['zip'] != row['o']) or (pm['building'] != row['b']) or (pm['latitude'] != row['l.a']) or (pm['longitude'] != row['l.o']):
@@ -69,7 +69,7 @@ class ParcelLocker(models.Model):
                     last_id = index
                 else:
                     last_id += 1
-                self.env['parcel.locker'].create({
+                self.env['parcel.machine'].create({
                     'id': last_id, 
                     'code': row['n'], 
                     'description': row['d'], 
@@ -82,4 +82,4 @@ class ParcelLocker(models.Model):
                     'latitude': row['l.a'], 
                     'longitude': row['l.o']
                     })
-                self.env['parcel.locker'].flush_model()
+                self.env['parcel.machine'].flush_model()

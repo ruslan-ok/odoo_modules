@@ -1,7 +1,7 @@
 import pandas as pd
 import json
 
-with open('points.json') as data_file:
+with open('/home/ruslan/src/odoo_modules/parcel_machine/data/parcel_machine_data.json') as data_file:
     data = json.load(data_file)
 df = pd.json_normalize(data, 'items')
 # n - id
@@ -23,5 +23,5 @@ df = pd.json_normalize(data, 'items')
 # l.a - latitude
 # l.o - longitude
 df_dbg = df[df['g'] == 'wroclaw'][['n', 'd', 'c', 'g', 'e', 'r', 'o', 'b', 'l.a', 'l.o']]
-#df_dbg.to_csv('parcel.locker.csv', index=False, header=['code', 'description', 'city', 'city_eng', 'street', 'area', 'zip', 'building', 'latitude', 'longitude'])
-df_dbg.to_csv('parcel.locker.csv', header=['code', 'description', 'city', 'city_eng', 'street', 'area', 'zip', 'building', 'latitude', 'longitude'])
+df_dbg.to_csv('/home/ruslan/src/odoo_modules/parcel_machine/data/parcel.machine.csv', index=True, index_label='id',
+            header=['code', 'description', 'city', 'city_eng', 'street', 'area', 'zip', 'building', 'latitude', 'longitude'])

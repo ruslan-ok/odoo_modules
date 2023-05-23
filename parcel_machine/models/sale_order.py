@@ -7,14 +7,14 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     delivery_inpost = fields.Boolean('Delivery InPost', default=False)
-    parcel_locker_id = fields.Many2one('parcel.locker', string='Parcel Delivery Address',
-        help='Parcel locker address for delivery.')
+    parcel_machine_id = fields.Many2one('parcel.machine', string='Parcel Delivery Address',
+        help='Parcel Machine address for delivery.')
     zip = fields.Char(string="Postal code (zip)", compute='_compute_zip')
 
     @api.onchange('partner_id')
     def _onchange_partner_id_inpost(self):
         self.delivery_inpost = False
-        self.parcel_locker_id = False
+        self.parcel_machine_id = False
 
 
     #=== COMPUTE METHODS ===#

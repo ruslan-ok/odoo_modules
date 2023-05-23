@@ -6,20 +6,15 @@
     'version': '1.0',
     'author': 'Ruslan Akunevich',
     'category': 'Customizations',
-    'summary': 'Sales Orders, Delivery & Invoicing Control',
-    'description': """
-Delivery InPost
-==================================
-
-This module allows delivery to a parcel machine.
-""",
+    'summary': 'Parcel Machine list, Sale Orders, Delivery control',
+    'description': 'This module allows deliver the purchase to a parcel machine.',
     'depends': ['base', 'sale'],
     'data': [
-        'security/sale_parcel_security.xml',
+        'security/parcel_machine_groups.xml',
         'security/ir.model.access.csv',
-        'data/parcel.locker.csv',
-        'data/ir_cron_data.xml',
-        'views/parcel_locker_views.xml',
+        'data/parcel.machine.csv',
+        'data/parcel_machine_cron.xml',
+        'views/parcel_machine_views.xml',
         'views/sale_order_views.xml',
         'views/sale_menus.xml',
     ],
