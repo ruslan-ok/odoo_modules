@@ -2,6 +2,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
+import pandas as pd
+import json
+
 
 class ParcelLocker(models.Model):
     """ Model for a parcel locker.
@@ -34,3 +37,49 @@ class ParcelLocker(models.Model):
     def _compute_count(self):
         for wizard in self:
             wizard.count = len(wizard.sale_order_ids)
+
+    def _cron_update_from_csv(self, fname='points.json'):
+        with open(fname) as data_file:
+            data = json.load(data_file)
+        df = pd.json_normalize(data, 'items')
+        df_torun = df[df['g'] == 'torun'][['n', 'd', 'c', 'g', 'e', 'r', 'o', 'b', 'l.a', 'l.o']]
+        last_id = 0
+        self._cr.execute('SELECT max(parcel_locker.id) FROM parcel_locker')
+        res = self._cr.fetchone()
+        if res:
+            last_id = res[0]
+        for index, row in df_torun.iterrows():
+            pm = self.env['parcel.locker'].search(domain=[('code', '=', row['n'])], limit=1)
+            if pm:
+                if (pm['description'] != row['d']) or (pm['city'] != row['c']) or (pm['city_eng'] != row['g']) or (pm['street'] != row['e']) or (pm['area'] != row['r']) or \
+                    (pm['zip'] != row['o']) or (pm['building'] != row['b']) or (pm['latitude'] != row['l.a']) or (pm['longitude'] != row['l.o']):
+                    pm.write({
+                        'description': row['d'], 
+                        'city': row['c'], 
+                        'city_eng': row['g'], 
+                        'street': row['e'], 
+                        'area': row['r'], 
+                        'zip': row['o'], 
+                        'building': row['b'], 
+                        'latitude': row['l.a'], 
+                        'longitude': row['l.o']
+                        })
+            else:
+                if index > last_id:
+                    last_id = index
+                else:
+                    last_id += 1
+                self.env['parcel.locker'].create({
+                    'id': last_id, 
+                    'code': row['n'], 
+                    'description': row['d'], 
+                    'city': row['c'], 
+                    'city_eng': row['g'], 
+                    'street': row['e'], 
+                    'area': row['r'], 
+                    'zip': row['o'], 
+                    'building': row['b'], 
+                    'latitude': row['l.a'], 
+                    'longitude': row['l.o']
+                    })
+                self.env['parcel.locker'].flush_model()

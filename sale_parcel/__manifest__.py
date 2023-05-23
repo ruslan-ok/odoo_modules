@@ -18,6 +18,7 @@ This module allows delivery to a parcel machine.
         'security/sale_parcel_security.xml',
         'security/ir.model.access.csv',
         'data/parcel.locker.csv',
+        'data/ir_cron_data.xml',
         'views/parcel_locker_views.xml',
         'views/sale_order_views.xml',
         'views/sale_menus.xml',
